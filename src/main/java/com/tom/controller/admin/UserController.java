@@ -29,17 +29,9 @@ public class UserController extends HttpServlet {
         if (action.startsWith("/new")) {
             createUser(request, response);
             return;
-        } else if (action.startsWith("/edit/")) {
-            String[] parts1 = action.split("/");
-            if (parts1.length == 3) {
-                try {
-                    int id = Integer.parseInt(parts1[2]);
-                    editUser(request, response, id);
-                    return;
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
+        } else if (action.startsWith("/edit")) {
+            Integer id = Integer.valueOf(request.getParameter("userId"));
+            editUser(request, response, id);    
         } else {
             listUser(request, response);
         }
@@ -74,7 +66,22 @@ public class UserController extends HttpServlet {
     }
 
     private void createUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = new User();
+        request.setAttribute("user", user);
+        request.setAttribute("mode", "create");
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/user/user_form.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void editUser(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
+        UserService userService = new UserService();
+        User user = userService.getById(id);
+        request.setAttribute("user", user);
+        request.setAttribute("mode", "update");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/user/user_form.jsp");
+
         dispatcher.forward(request, response);
     }
 
@@ -108,7 +115,7 @@ public class UserController extends HttpServlet {
 
         if (userService.getByEmail(email) != null && userService.getByEmail(email).getUserId() != id){
             request.getSession().setAttribute("error","Email da ton tai");
-            response.sendRedirect(request.getContextPath() + "/admin/manage_user/edit/" + id);
+            response.sendRedirect(request.getContextPath() + "/admin/manage_user/edit?userId=" + id);
             return;
         }
 
@@ -116,15 +123,6 @@ public class UserController extends HttpServlet {
         userService.updateUser(user);
 
         response.sendRedirect("manage_user");
-    }
-
-    private void editUser(HttpServletRequest request, HttpServletResponse response, int id) throws ServletException, IOException {
-        UserService userService = new UserService();
-        User user = userService.getById(id);
-        request.setAttribute("user", user);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/user/user_form_update.jsp");
-        dispatcher.forward(request, response);
     }
 
     private void deleteUser (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

@@ -13,12 +13,15 @@
     <body>
         <jsp:include page="layout/navbar.jsp" />
 
-        <div class="container py-5">
-            <h1 class="text-center">Admin</h1>
-
-            <hr class="mx-auto" style="width: 50%">
-
-            <h2 class="text-center">TODO: Statistic</h2>
+        <div class="container flex-grow-1">
+            <div class="row">
+                <div class="col-3">
+                    <jsp:include page="layout/sidebar.jsp" />
+                </div>
+                <div class="col-8">
+                    <jsp:include page="user/user_list.jsp" />
+                </div>
+            </div>
         </div>
 
         <%@include file="layout/footer.jsp" %>
