@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="category")
+@NamedQueries({
+        @NamedQuery(name = "Category.HQL.getByName", query = "SELECT u FROM Category u WHERE :name = u.name"),
+})
 @NoArgsConstructor
 @Getter
 @Setter

@@ -22,7 +22,7 @@
     <div class="d-flex align-items-center justify-content-center">
         <a href="${pageContext.request.contextPath}/admin/manage_user">User</a>
         <span class="mx-3"> | </span>
-        <a href="#">Categories</a>
+        <a href="${pageContext.request.contextPath}/admin/manage_category">Categories</a>
         <span class="mx-3"> | </span>
         <a href="#">Books</a>
         <span class="mx-3"> | </span>

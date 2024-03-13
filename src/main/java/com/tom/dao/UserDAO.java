@@ -1,11 +1,7 @@
 package com.tom.dao;
 
 import com.tom.entity.User;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class UserDAO extends JpaDAO<User>{

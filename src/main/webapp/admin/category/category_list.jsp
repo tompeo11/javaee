@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="container py-5">
-    <h1 class="text-center mb-4">User management</h1>
+    <h1 class="text-center mb-4">Category management</h1>
     <div class="d-flex align-items-center justify-content-center">
-        <a href="${pageContext.request.contextPath}/admin/manage_user/new" class="me-4">New user</a>
+        <a href="${pageContext.request.contextPath}/admin/manage_category/new" class="me-4">New category</a>
     </div>
     <hr>
     <div class="d-flex align-items-center justify-content-center">
@@ -11,25 +12,24 @@
             <tr>
                 <th>Index</th>
                 <th>Id</th>
-                <th>Email</th>
-                <th>Full name</th>
+                <th>Name</th>
                 <th>Actions</th>
             </tr>
             </thead>
 
             <tbody>
-            <c:forEach var="user" items="${userList}" varStatus="iterationCount">
-                <jsp:useBean id="user" type="com.tom.entity.User"></jsp:useBean>
+            <c:forEach var="category" items="${categoryList}" varStatus="iterationCount">
+                <jsp:useBean id="category" type="com.tom.entity.Category"></jsp:useBean>
                 <tr>
                     <td>${iterationCount.index + 1}</td>
-                    <td>${user.userId}</td>
-                    <td>${user.email}</td>
-                    <td>${user.fullName}</td>
+                    <td>${category.categoryId}</td>
+                    <td>${category.name}</td>
                     <td class=" " style="width: 20%">
                         <div class="d-flex">
                             <a class="btn btn-primary me-3"
-                               href="${pageContext.request.contextPath}/admin/manage_user/edit?userId=${user.userId}">Edit</a>
-                            <button onclick="confirmDelete(${user.userId}, '${user.email}')" class="btn btn-danger">
+                               href="${pageContext.request.contextPath}/admin/manage_category/edit?categoryId=${category.categoryId}">Edit</a>
+                            <button onclick="confirmDelete(${category.categoryId}, '${category.name}')"
+                                    class="btn btn-danger">
                                 Delete
                             </button>
                         </div>
@@ -41,8 +41,8 @@
     </div>
 </div>
 
-<form id="deleteUserForm" action="${pageContext.request.contextPath}/admin/manage_user/delete" method="post">
-    <input id="deleteUser" type="hidden" name="userId">
+<form id="deleteCategoryForm" action="${pageContext.request.contextPath}/admin/manage_category/delete" method="post">
+    <input id="deleteCategory" type="hidden" name="categoryId">
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -60,15 +60,15 @@
 </c:if>
 
 <script type="text/javascript">
-    const deleteUserForm = document.getElementById('deleteUserForm');
-    const deleteUser = document.getElementById('deleteUser')
+    const deleteCategoryForm = document.getElementById('deleteCategoryForm');
+    const deleteCategory = document.getElementById('deleteCategory')
 
-    function confirmDelete(id, email) {
-        deleteUser.value = id;
+    function confirmDelete(id, name) {
+        deleteCategory.value = id;
 
 
         Swal.fire({
-            title: "Are you sure delete " + email,
+            title: "Are you sure delete " + name,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -77,7 +77,7 @@
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteUserForm.submit()
+                deleteCategoryForm.submit()
             }
         });
     }

@@ -2,14 +2,16 @@
 
 <div class="container">
     <div class="d-flex align-items-center justify-content-between">
-        <%--    <img src="<%= request.getContextPath() %>/images/gura.jpg" alt="logo image" style="">--%>
-            <img src="<c:url value="/images/logo.jpg"/>" width="" alt="logo image">
+<%--        <img src="<%= request.getContextPath() %>/images/gura.jpg" alt="logo image" style="">--%>
+        <img src="<c:url value="/images/logo.jpg"/>" width="" alt="logo image">
 <%--        <img src="${pageContext.request.contextPath}/images/logo.jpg" width="" alt="logo image">--%>
 
 
         <div>
-            <a class="text-decoration-none" style="font-weight: bold; font-size: larger" href="${pageContext.request.contextPath}/">Home</a>
-            <a class="text-decoration-none" style="font-weight: bold; font-size: larger" href="${pageContext.request.contextPath}/admin/">Admin</a>
+            <a class="text-decoration-none" style="font-weight: bold; font-size: larger"
+               href="${pageContext.request.contextPath}/">Home</a>
+            <a class="text-decoration-none" style="font-weight: bold; font-size: larger"
+               href="${pageContext.request.contextPath}/admin/">Admin</a>
         </div>
 
 

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
 @WebServlet("/admin/manage_user/*")
 public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -27,7 +26,7 @@ public class UserController extends HttpServlet {
         String action = request.getPathInfo() == null ? "/list" : request.getPathInfo();
 
         if (action.startsWith("/new")) {
-            createUser(request, response);
+            addUser(request, response);
             return;
         } else if (action.startsWith("/edit")) {
             Integer id = Integer.valueOf(request.getParameter("userId"));
@@ -44,7 +43,7 @@ public class UserController extends HttpServlet {
 
         switch (action){
             case "/insert":
-                insertUser(request, response);
+                createUser(request, response);
                 break;
             case "/update":
                 updateUser(request, response);
@@ -65,7 +64,7 @@ public class UserController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void createUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = new User();
         request.setAttribute("user", user);
         request.setAttribute("mode", "create");
@@ -85,21 +84,21 @@ public class UserController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void insertUser (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void createUser (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String email = request.getParameter("email");
         String fullName = request.getParameter("fullName");
         String password = request.getParameter("password");
 
         User user = new User(email, fullName, password);
 
-        if (userService.getByEmail(email) != null){
-            request.getSession().setAttribute("error","Email da ton tai");
-            response.sendRedirect(request.getContextPath() + "/admin/manage_user/new");
-            return;
+        String message = userService.createUser(user);
+
+        if (message != null) {
+            request.getSession().setAttribute("error",message);
         }
 
-        request.getSession().setAttribute("success","Them thanh cong");
-        userService.createUser(user);
+        request.getSession().setAttribute("success","Add user success");
+
 
         response.sendRedirect("manage_user");;
     }

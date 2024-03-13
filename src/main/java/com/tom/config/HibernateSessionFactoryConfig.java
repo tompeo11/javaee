@@ -1,5 +1,8 @@
 package com.tom.config;
 
+import com.tom.entity.Category;
+import com.tom.entity.Customer;
+import com.tom.entity.Product;
 import com.tom.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -30,6 +33,10 @@ public class HibernateSessionFactoryConfig {
 
                 //models
                 configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(Category.class);
+                configuration.addAnnotatedClass(Product.class);
+                configuration.addAnnotatedClass(Customer.class);
+
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

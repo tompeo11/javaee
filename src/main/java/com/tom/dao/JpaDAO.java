@@ -1,6 +1,5 @@
 package com.tom.dao;
 
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.tom.config.HibernateSessionFactoryConfig;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

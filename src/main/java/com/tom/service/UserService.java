@@ -16,8 +16,13 @@ public class UserService {
         return userDAO.getAll();
     }
 
-    public void createUser(User user){
+    public String createUser(User user){
+        if (userDAO.getByEmail(user.getEmail().trim()) != null){
+            return "Email is exists";
+        }
+
         userDAO.create(user);
+        return null;
     }
 
     public void updateUser(User user){
