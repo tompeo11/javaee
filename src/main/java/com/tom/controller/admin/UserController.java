@@ -2,6 +2,7 @@ package com.tom.controller.admin;
 
 import com.tom.entity.User;
 import com.tom.service.UserService;
+import com.tom.utilities.CryptoUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -89,7 +90,7 @@ public class UserController extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String password = request.getParameter("password");
 
-        User user = new User(email, fullName, password);
+        User user = new User(email, fullName, CryptoUtil.hashPassword(password, getServletContext().getInitParameter("salt")));
 
         String message = userService.createUser(user);
 
@@ -99,8 +100,7 @@ public class UserController extends HttpServlet {
 
         request.getSession().setAttribute("success","Add user success");
 
-
-        response.sendRedirect("manage_user");;
+        response.sendRedirect("manage_user");
     }
 
     private void updateUser (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -109,7 +109,7 @@ public class UserController extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String password = request.getParameter("password");
 
-        User user = new User(email, fullName, password);
+        User user = new User(email, fullName, CryptoUtil.hashPassword(password, getServletContext().getInitParameter("salt")));
         user.setUserId(id);
 
         if (userService.getByEmail(email) != null && userService.getByEmail(email).getUserId() != id){

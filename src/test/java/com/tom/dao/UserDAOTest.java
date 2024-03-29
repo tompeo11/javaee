@@ -71,6 +71,11 @@ class UserDAOTest {
         assertTrue(totalRecord > 0L);
     }
 
+    @Test
+    void testLogin(){
+        assertTrue(userDAO.checkLogin("tom@gmail.com", "tom"));
+    }
+
     @AfterAll
     static void tearDownAfterClass() throws Exception{
         System.out.println("Clean up");

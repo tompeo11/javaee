@@ -6,12 +6,11 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/products/categoryId=${category.categoryId}">${currentCategory.name}</a></li>
         </ol>
     </nav>
 </div>
-
-<h3 class="d-flex">Home</h3>
-
+<h1>${currentCategory.name}</h1>
 <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
     <c:forEach var="product" items="${productList}" varStatus="iterationCount">
         <jsp:useBean id="product" type="com.tom.entity.Product"/>
@@ -24,11 +23,11 @@
                     <div class="mt-auto">
                         <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="$" var="formattedPrice"/>
                         <p class="text-warning">${formattedPrice}</p>
-                        <a href="${contextPath}/ebook/products/detail?productId=${product.productId}" class="btn btn-primary w-100">Details</a>
-                            <%--                        <button onclick="view(${product.productId}, '${product.name}', '${product.description}', '${product.price}', '${product.base64Image}', '${product.category.name}')"--%>
-                            <%--                                class="btn btn-primary">--%>
-                            <%--                            View--%>
-                            <%--                        </button>--%>
+<%--                        <a href="${contextPath}/ebook/products/detail?productId=${product.productId}" class="btn btn-primary w-100">Details</a>--%>
+                        <button onclick="view(${product.productId}, '${product.name}', '${product.description}', '${product.price}', '${product.base64Image}', '${product.category.name}')"
+                                class="btn btn-primary">
+                            Details
+                        </button>
                     </div>
                 </div>
             </div>
@@ -45,9 +44,9 @@
         Swal.fire({
             title: "Details!",
             html: "Name: " + name + "<br>" +
-                "Category name: " + categoryName + "<br>" +
-                "Description: " + description + "<br>" +
-                "Price: $" + price,
+                  "Category name: " + categoryName + "<br>" +
+                  "Description: " + description + "<br>" +
+                  "Price: $" + price,
             imageUrl: "data:image/jpg;base64, " + base64Image,
             imageWidth: 150,
             imageHeight: 250,

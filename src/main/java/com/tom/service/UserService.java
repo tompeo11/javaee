@@ -40,4 +40,15 @@ public class UserService {
     public void deleteById(int id){
         userDAO.deleteById(id);
     }
+
+    public String checkLogin(String email, String password) {
+        boolean success = userDAO.checkLogin(email, password);
+
+        if (success) {
+            return null;
+        }
+
+        return "Login fail";
+    }
+
 }

@@ -7,4 +7,18 @@
         <pattern>/admin</pattern>
     </decorator>
 
+    <decorator name="user" page="user_layout.jsp">
+        <pattern>/*</pattern>
+        <pattern>/</pattern>
+    </decorator>
+
+    <excludes>
+        <pattern>/admin/login*</pattern>
+        <pattern>/login</pattern>
+
+        <pattern>/products/detail*</pattern>
+    </excludes>
+
+
+
 </decorators>

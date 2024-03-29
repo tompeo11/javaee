@@ -11,7 +11,6 @@
             <thead>
             <tr>
                 <th>Index</th>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Actions</th>
             </tr>
@@ -22,7 +21,6 @@
                 <jsp:useBean id="category" type="com.tom.entity.Category"></jsp:useBean>
                 <tr>
                     <td>${iterationCount.index + 1}</td>
-                    <td>${category.categoryId}</td>
                     <td>${category.name}</td>
                     <td class=" " style="width: 20%">
                         <div class="d-flex">

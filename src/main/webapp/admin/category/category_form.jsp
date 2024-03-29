@@ -14,6 +14,7 @@
     <hr class="mx-auto" style="width: 50%">
     <div class="d-flex flex-column align-items-center py-5">
         <form id="categoryForm" style="width: 350px" ; action="${action}" method="post">
+
             <c:if test="${not empty sessionScope.error}">
                 <div class="alert alert-danger" role="alert">
                         ${sessionScope.error}

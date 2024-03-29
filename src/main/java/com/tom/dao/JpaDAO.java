@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import lombok.extern.java.Log;
 
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,7 +13,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
+@Log
 public class JpaDAO<T> {
     protected SessionFactory sessionFactory;
     private Class<T> _genericClass;
@@ -215,5 +218,31 @@ public class JpaDAO<T> {
             e.printStackTrace();
         }
         return t;
+    }
+
+    public List<T> getByNamedQueryWithParams(String hql, Map<String, Object> params) {
+        Transaction transaction = null;
+        List<T> objectList = null;
+
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+
+            @SuppressWarnings("unchecked")
+            Query<T> hqlQuery = session.createNamedQuery(hql);
+
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                hqlQuery.setParameter(entry.getKey(), entry.getValue());
+            }
+
+            objectList = hqlQuery.getResultList();
+
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+        return objectList;
     }
 }

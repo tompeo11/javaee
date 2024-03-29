@@ -1,7 +1,9 @@
 package com.tom.controller.frontend;
 
 import com.tom.entity.Category;
+import com.tom.entity.Product;
 import com.tom.service.CategoryService;
+import com.tom.service.ProductService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,10 +15,13 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private CategoryService categoryService;
+    private ProductService productService;
 
     public HomeServlet(){
         super();
         categoryService = new CategoryService();
+        productService = new ProductService();
+
     }
 
 
@@ -25,12 +30,14 @@ public class HomeServlet extends HttpServlet {
         List<Category> categoryList = categoryService.getAllCategories();
         request.setAttribute("categoryList", categoryList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("frontend/index.jsp");
+        List<Product> productList = productService.getAllProducts();
+
+        request.setAttribute("productList", productList);
+
+
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("frontend/index.jsp");
         dispatcher.forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

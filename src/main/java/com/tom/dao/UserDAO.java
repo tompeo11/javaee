@@ -2,7 +2,9 @@ package com.tom.dao;
 
 import com.tom.entity.User;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDAO extends JpaDAO<User>{
     public UserDAO(){
@@ -49,5 +51,19 @@ public class UserDAO extends JpaDAO<User>{
 
     public User getByEmail(String email){
        return super.findOneWithHQL("User.HQL.getByEmail", "email", email);
+    }
+
+    public boolean checkLogin(String email, String password) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("email", email);
+        params.put("password", password);
+
+        List<User> userList = super.getByNamedQueryWithParams("User.HQL.checkLogin",params);
+
+        if (userList.size() <= 0){
+            return false;
+        }
+
+        return true;
     }
 }

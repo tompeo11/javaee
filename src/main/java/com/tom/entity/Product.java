@@ -1,14 +1,20 @@
 package com.tom.entity;
 
 import lombok.*;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Base64;
 
 @Entity
 @Table(name="product")
+@NamedQueries({
+        @NamedQuery(name = "Product.HQL.getByName", query = "SELECT u FROM Product u WHERE :name = u.name"),
+        @NamedQuery(name = "Product.HQL.getByCategory",
+                query = "SELECT u FROM Product u " +
+        "               JOIN Category c On u.category.categoryId = c.categoryId " +
+        "               AND c.categoryId = :categoryId"),
+})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,14 +29,8 @@ public class Product {
     @Column(name="name")
     private String name;
 
-    @Column(name="author")
-    private String author;
-
     @Column(name="description")
     private String description;
-
-    @Column(name="isbn")
-    private String isbn;
 
     @Column(name="image")
     private byte[] image;
@@ -38,26 +38,22 @@ public class Product {
     @Column(name="price")
     private BigDecimal price;
 
-    @Column(name="publish_date")
-    private Date publishDate;
-
-    @UpdateTimestamp
-    @Column(name="last_update_time")
-    private Date lastUpdateTime;
-
     @ManyToOne()
     @JoinColumn(name="category_id")
-    private Category category_id;
+    private Category category;
 
-    public Product(String name, String author, String description, String isbn, byte[] image, BigDecimal price, Date publishDate, Date lastUpdateTime, Category category_id) {
+    @Transient
+    private String base64Image;
+
+    public Product(String name,  String description, byte[] image, BigDecimal price, Category category_id) {
         this.name = name;
-        this.author = author;
         this.description = description;
-        this.isbn = isbn;
         this.image = image;
         this.price = price;
-        this.publishDate = publishDate;
-        this.lastUpdateTime = lastUpdateTime;
-        this.category_id = category_id;
+        this.category = category_id;
+    }
+
+    public String getBase64Image() {
+        return Base64.getEncoder().encodeToString(this.image);
     }
 }

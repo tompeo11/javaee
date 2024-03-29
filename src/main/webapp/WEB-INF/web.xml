@@ -8,6 +8,26 @@
         <filter-name>sitemesh</filter-name>
         <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
     </filter>
+    
+    <context-param>
+        <param-name>baseURL</param-name>
+        <param-value>http://localhost:8080/ebook</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>salt</param-name>
+        <param-value>[db]Hq38cn%eOd9A7za$C6uEp-GGT1A/d%z/Y;G)GRw4W=vcBG{VYl]N3XDzEer_wbZE3%KB-QqfLggtaJ||Jv0[iUsj]OV</param-value>
+    </context-param>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+
+<!--    <error-page>-->
+<!--        <error-code>500</error-code>-->
+<!--        <location>/error/500.jsp</location>-->
+<!--    </error-page>-->
 
     <filter-mapping>
         <filter-name>sitemesh</filter-name>

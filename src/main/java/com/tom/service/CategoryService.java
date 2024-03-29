@@ -2,7 +2,6 @@ package com.tom.service;
 
 import com.tom.dao.CategoryDAO;
 import com.tom.entity.Category;
-import com.tom.entity.User;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class CategoryService {
         Category existCategory = this.categoryDAO.getByName(category.getName());
 
         if (existCategory != null){
-            return "The category name is already used";
+            return "The category name is already exists";
         }
 
         categoryDAO.create(category);
